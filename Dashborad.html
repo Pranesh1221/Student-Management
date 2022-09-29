@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #container {
+        /* border: 1px solid blue; */
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        width: 80%;
+        margin: auto;
+        gap: 20px;
+        margin-top: 60px;
+      }
+      #container > div {
+        /* border: 1px solid red; */
+        width: 80%;
+        margin: auto;
+        text-align: center;
+        padding: 10px;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+          rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+      }
+      img {
+        width: 100%;
+        height: 250px;
+      }
+      #btnBox {
+        /* border: 1px solid green; */
+        display: flex;
+        justify-content: space-around;
+        margin-top: 30px;
+        margin-bottom: 20px;
+      }
+      #btnBox button:first-child {
+        padding: 4px 10px;
+        background-color: white;
+        border: 1px solid blue;
+        border-radius: 8px;
+        background-color: blue;
+        color: white;
+      }
+      #btnBox button:last-child {
+        padding: 4px 25px;
+        background-color: white;
+        border: 1px solid white;
+        border-radius: 8px;
+        color: white;
+      }
+      #btn {
+        padding: 10px 60px;
+        border-radius: 10px;
+        border: 1px solid blue;
+        background-color: blue;
+        margin-top: 40px;
+        margin-left: 180px;
+        margin-bottom: 30px;
+      }
+      #btn a {
+        color: white;
+        text-decoration: none;
+        font-weight: 800;
+      }
+      #container button {
+        padding: 8px 20px;
+        margin-top: 10px;
+        border-radius: 8px;
+        border: 1px solid red;
+        background-color: red;
+        color: white;
+        font-weight: 700;
+      }
+      #naav {
+        display: flex;
+      }
+      #nav {
+        /* border: 1px solid red; */
+      }
+      #counter {
+        font-size: larger;
+        font-weight: 800;
+        margin-left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <button id="btn"><a href="Home.html">Home</a></button>
+    </div>
+    <div id="nav"></div>
+    <div id="container"></div>
+  </body>
+</html>
+<script>
+  var dashArr = JSON.parse(localStorage.getItem("studentData"));
+
+  display(dashArr);
+
+  function display(dashArr) {
+    document.getElementById("container").innerHTML = "";
+    dashArr.map(function (elem, index) {
+      var div = document.createElement("div");
+      var name = document.createElement("h3");
+      name.innerText = elem.name;
+
+      var ima = document.createElement("img");
+      ima.setAttribute("src", elem.image);
+
+      var remove = document.createElement("button");
+      remove.innerText = "Remove";
+      remove.addEventListener("click", function () {
+        removeItem(index);
+      });
+
+      div.append(name, ima, remove);
+      document.getElementById("container").append(div);
+    });
+  }
+  function removeItem(index) {
+    dashArr.splice(index, 1);
+
+    localStorage.setItem("studentData", JSON.stringify(dashArr));
+    display(dashArr);
+  }
+
+  function calculate() {
+    document.getElementById("nav").innerHTML = "";
+    var data = JSON.parse(localStorage.getItem("studentData")) || [];
+    var obj = {};
+
+    for (var i = 0; i < data.length; i++) {
+      if (!obj[data[i].batch]) {
+        obj[data[i].batch] = 0;
+      }
+    }
+    for (var i = 0; i < data.length; i++) {
+      obj[data[i].batch]++;
+    }
+    for (const key in obj) {
+      var counter = document.createElement("span");
+      counter.setAttribute("id", "counter");
+      counter.innerText = key + " " + ":-" + obj[key] + "|";
+      document.getElementById("nav").append(counter);
+    }
+  }
+  calculate();
+</script>

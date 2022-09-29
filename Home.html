@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Data Management</title>
+    <style>
+      form {
+        width: 25%;
+        margin: auto;
+        /* border: 2px solid blue; */
+        padding: 20px;
+        text-align: center;
+        box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset,
+          rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+        background-color: white;
+      }
+      .labe {
+        text-align: left;
+        margin-left: 30px;
+      }
+      input[type="text"] {
+        padding: 8px 80px;
+        border-radius: 8px;
+        border: 1px solid;
+        margin-top: 5px;
+        margin-bottom: 10px;
+      }
+      input[type="number"] {
+        padding: 8px 80px;
+        border-radius: 8px;
+        border: 1px solid;
+        margin-top: 5px;
+        margin-bottom: 10px;
+      }
+      input[type="url"] {
+        padding: 8px 80px;
+        border-radius: 8px;
+        border: 1px solid;
+        margin-top: 5px;
+        margin-bottom: 10px;
+      }
+
+      select {
+        padding: 8px 125px;
+        border-radius: 8px;
+        border: 1px solid;
+        margin-top: 5px;
+        margin-bottom: 10px;
+      }
+      #add {
+        padding: 10px 120px;
+        border-radius: 8px;
+        border: 1px solid blue;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        background-color: blue;
+        cursor: pointer;
+        text-decoration: none;
+        color: white;
+      }
+
+      #head {
+        text-align: center;
+        color: teal;
+      }
+      #btn {
+        padding: 10px 60px;
+        border-radius: 10px;
+        border: 1px solid teal;
+        background-color: teal;
+        margin-top: 20px;
+        margin-left: 100px;
+      }
+      #btn a {
+        color: white;
+        text-decoration: none;
+        font-weight: 800;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="btn"><a href="Dashborad.html">Dashboard</a></button>
+    <div id="head"><h1>HOME</h1></div>
+    <form>
+      <div>
+        <div class="labe">
+          <label for="name">Student Name</label>
+        </div>
+        <input id="name" type="text" placeholder="Enter Student Name" />
+      </div>
+      <div>
+        <div class="labe">
+          <label for="course">Course</label>
+        </div>
+        <input id="course" type="text" placeholder="Enter your course" />
+      </div>
+      <div>
+        <div class="labe">
+          <label for="Unit">Unit</label>
+        </div>
+        <select id="unit">
+          <option>Select</option>
+          <option>Unit-1</option>
+          <option>Unit-2</option>
+          <option>Unit-3</option>
+          <option>Unit-4</option>
+          <option>Unit-5</option>
+          <option>Unit-6</option>
+          <option>Unit-7</option>
+        </select>
+      </div>
+      <div>
+        <div class="labe">
+          <label for="image">Image URL</label>
+        </div>
+        <input id="image" type="url" placeholder="Image url" />
+      </div>
+
+      <div>
+        <div class="labe">
+          <label for="batch">Batch</label>
+        </div>
+        <select id="batch">
+          <option>Select</option>
+          <option>Pt-web-1</option>
+          <option>Pt-web-2</option>
+          <option>Pt-web-3</option>
+          <option>Pt-web-4</option>
+          <option>Pt-web-5</option>
+        </select>
+      </div>
+      <div>
+        <button id="add">Submit</button>
+      </div>
+    </form>
+  </body>
+</html>
+<script>
+  document.querySelector("form").addEventListener("submit", addData);
+
+  function studManagement(n, c, u, i, b) {
+    this.name = n;
+    this.course = c;
+    this.unit = u;
+    this.image = i;
+    this.batch = b;
+  }
+  var managementArr = JSON.parse(localStorage.getItem("studentData")) || [];
+  function addData() {
+    event.preventDefault();
+    var name = document.getElementById("name").value;
+    var course = document.getElementById("course").value;
+    var unit = document.getElementById("unit").value;
+    var image = document.getElementById("image").value;
+    var batch = document.getElementById("batch").value;
+
+    var studArr = new studManagement(name, course, unit, image, batch);
+    managementArr.push(studArr);
+    localStorage.setItem("studentData", JSON.stringify(managementArr));
+    document.getElementById("name").value = "";
+    document.getElementById("course").value = "";
+    document.getElementById("unit").value = "";
+    document.getElementById("image").value = "";
+    document.getElementById("batch").value = "";
+  }
+</script>
